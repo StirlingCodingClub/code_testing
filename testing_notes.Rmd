@@ -33,3 +33,7 @@ Contents
 
 <a name="whatelse">Additional resources</a>
 ================================================================================
+
+
+- [Example of unit testing R code with testthat](https://www.johndcook.com/blog/2013/06/12/example-of-unit-testing-r-code-with-testthat/) (John D. Cook)
+
