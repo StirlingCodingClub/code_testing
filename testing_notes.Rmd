@@ -1,0 +1,35 @@
+---
+title: "Introduction to testing R code"
+author: "John Wilson, Brad Duthie"
+date: "1 May 2019"
+output: 
+    html_document:
+        code_folding: show
+---
+
+Contents
+================================================================================
+
+********************************************************************************
+
+**Note: Please think of this document as a living document, which you are free to improve (like a [wiki](https://en.wikipedia.org/wiki/Wiki)) with minor edits, new sections that others might find useful, or [additional resources](#whatelse) that you find that you think others might also find useful. After reading through this, you will have been introduced to the basic principles of writing tests for the code that you have written.**
+
+********************************************************************************
+
+- [Introduction: Why code testing?](#intro)
+- [The testthat R package](#testthat) 
+- [Additional resources](#whatelse)
+
+********************************************************************************
+
+<a name="intro">Introduction: Why code testing?</a>
+================================================================================
+
+
+
+<a name="testthat">The testthat R package</a>
+================================================================================
+
+
+<a name="whatelse">Additional resources</a>
+================================================================================
