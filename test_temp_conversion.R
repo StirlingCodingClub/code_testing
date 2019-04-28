@@ -24,6 +24,5 @@ test_that("Celsius to Fahrenheit", {
   expect_that( temp_F, equals(50) );
 })
 
-
 # The two tests can be run on the command line as below
 # test_dir(".")

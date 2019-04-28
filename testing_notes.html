@@ -159,9 +159,20 @@ $(document).ready(function () {
 </div>
 <div id="the-testthat-r-package" class="section level1">
 <h1><a name="testthat">The testthat R package</a></h1>
+<p>The first thing that you need to do is install the <a href="https://github.com/r-lib/testthat">testthat R package</a>.</p>
+<pre class="r"><code># Install the released version from CRAN
+install.packages(&quot;testthat&quot;)
+
+# Or the development version from GitHub:
+# install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;r-lib/testthat&quot;)</code></pre>
 </div>
 <div id="additional-resources" class="section level1">
 <h1><a name="whatelse">Additional resources</a></h1>
+<ul>
+<li><a href="https://www.johndcook.com/blog/2013/06/12/example-of-unit-testing-r-code-with-testthat/">Example of unit testing R code with testthat</a> (John D. Cook)</li>
+<li><a href="http://r-pkgs.had.co.nz/tests.html">Testing R packages</a> (Hadley Wickam)</li>
+</ul>
 </div>
 
 

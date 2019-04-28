@@ -30,10 +30,73 @@ Contents
 <a name="testthat">The testthat R package</a>
 ================================================================================
 
+The first thing that you need to do is install the [testthat R package](https://github.com/r-lib/testthat).
+
+```{r, eval = FALSE, echo = TRUE}
+# Install the released version from CRAN
+install.packages("testthat")
+
+# Or the development version from GitHub:
+# install.packages("devtools")
+devtools::install_github("r-lib/testthat")
+```
+
+Take the a simple [R script]() with custom R functions. The first converts a temperature from Fahrenheit to Celsius.
+
+```{r}
+F_to_C <- function(F_temp){
+    C_temp <- (F_temp - 32) * 5/9;
+    return(C_temp);
+}
+```
+
+The second converts Celsius to Fahrenheit.
+
+```{r}
+C_to_F <- function(C_temp){
+    F_temp <- (C_temp * 9/5) + 32;
+    return(F_temp);
+}
+```
+
+
+We then can write functions to be used with the testthat R package to test each of these. The below tests the `F_to_C` function.
+
+```{r}
+test_that("Fahrenheit to Celsius", {
+  
+  temp_C <- F_to_C(50);
+  
+  # Test that the result is numeric
+  expect_that( is.numeric(temp_C), equals(TRUE) );
+  
+  # Test that the result is the correct value
+  expect_that( temp_C, equals(10) );
+})
+```
+
+The below tests the `C_to_F` function.
+
+```{r}
+test_that("Celsius to Fahrenheit", {
+  
+  temp_F <- C_to_F(10);
+  
+  # Test that the result is numeric
+  expect_that( is.numeric(temp_F), equals(TRUE) );
+  
+  # Test that the result is the correct value
+  expect_that( temp_F, equals(50) );
+})
+```
+
+How to use this is fairly straightforward.
+
+
 
 <a name="whatelse">Additional resources</a>
 ================================================================================
 
 
 - [Example of unit testing R code with testthat](https://www.johndcook.com/blog/2013/06/12/example-of-unit-testing-r-code-with-testthat/) (John D. Cook)
-
+- [Testing R packages](http://r-pkgs.had.co.nz/tests.html) (Hadley Wickam)
