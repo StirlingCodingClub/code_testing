@@ -1,4 +1,5 @@
 library(testthat);
+context("Temperature function testing");
 source("temp_conversion.R");
 
 test_that("Fahrenheit to Celsius", {
@@ -22,6 +23,12 @@ test_that("Celsius to Fahrenheit", {
   
   # Test that the result is the correct value
   expect_that( temp_F, equals(50) );
+})
+
+# This test will fail
+test_that(desc = "Fahrenheit to Celsius wrong", code = {
+    temp_F <- F_to_C(50);
+    expect_that( object = temp_F, condition = equals(2) );
 })
 
 # The two tests can be run on the command line as below
