@@ -13,7 +13,6 @@ test_that("Fahrenheit to Celsius", {
   expect_that( temp_C, equals(10) );
 })
 
-
 test_that("Celsius to Fahrenheit", {
   
   temp_F <- C_to_F(10);

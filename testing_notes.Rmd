@@ -135,8 +135,67 @@ To run a full list of tests and return a report, we need to save the above tests
 
 **An R script for running testthat functions**
 
+Test functions can be saved like any other R script file (with a .R extension), but with one caveat. A test R script should start with the prefix 'test-'. A good way of doing this is to add the prefix to the name of file that stores the functions to be tested. In other words, if you are testing the functions in the file [temp_conversion.R](https://github.com/StirlingCodingClub/code_testing/blob/master/temp_conversion.R), then you can save the tests in the file [test-temp_conversion.R](https://github.com/StirlingCodingClub/code_testing/blob/master/test-temp_conversion.R). Here is what the [test-temp_conversion.R](https://github.com/StirlingCodingClub/code_testing/blob/master/test-temp_conversion.R) file looks like.
 
+```{r, eval = FALSE}
+library(testthat);
+context("Temperature function testing");
+source("temp_conversion.R");
 
+test_that("Fahrenheit to Celsius", {
+  
+  temp_C <- F_to_C(50);
+  
+  # Test that the result is numeric
+  expect_that( is.numeric(temp_C), equals(TRUE) );
+  
+  # Test that the result is the correct value
+  expect_that( temp_C, equals(10) );
+})
+
+test_that("Celsius to Fahrenheit", {
+  
+  temp_F <- C_to_F(10);
+  
+  # Test that the result is numeric
+  expect_that( is.numeric(temp_F), equals(TRUE) );
+  
+  # Test that the result is the correct value
+  expect_that( temp_F, equals(50) );
+})
+
+# This test will fail
+test_that(desc = "Fahrenheit to Celsius wrong", code = {
+    temp_F <- F_to_C(50);
+    expect_that( object = temp_F, condition = equals(2) );
+})
+```
+
+Note the first few lines of the file. The first line reads in the testthat R package. The second line provides some sort of title for the type of tests being run (in this case test of temperature functions). The context is important to specify due to an [unusual bug](https://github.com/r-lib/testthat/issues/700#issuecomment-367675035) that still appears unresolved in testthat; hence the context is mandatory. The `source` function reads in the functions to be tested; make sure that the correct directory is specified here and in R studio. For these example files, the working directory of Rstudio should be set to wherever the 'code_testing' folder is on your computer. Since both [test-temp_conversion.R](https://github.com/StirlingCodingClub/code_testing/blob/master/test-temp_conversion.R) and [temp_conversion.R](https://github.com/StirlingCodingClub/code_testing/blob/master/temp_conversion.R) are located immediately inside this directory (and not within other folders within it), running `source("temp_conversion.R")` should run all of the code in the [temp_conversion.R](https://github.com/StirlingCodingClub/code_testing/blob/master/temp_conversion.R) file (if, e.g., the file was located in a folder called 'R', ). In other words, after `source("temp_conversion.R")`, the `F_to_C` and `C_to_F` functions should be read into R and ready to use by testthat.
+
+After the testthat library is read in, the context established, and the functions to be tested sourced from the correct file, the tests themselves are added to the script. Any number of tests is permitted in a test script, and any number of scripts can be saved to the same directory. The automated test procedure will simply look for anything with the prefix 'test-' and extension '.R' in a directory and run all of the tests.
+
+**Running all of the tests**
+
+To run all of the tests, first make sure that R is in the correct directory (i.e., the same folder location as the test scripts). You can always check the working directory with the command below.
+
+```{r, eval = FALSE}
+getwd();
+```
+
+If the directory needs to be changed, you can specify with `setwd("path/to/directory")`, or use the Rstudio tool bar, going to <u>S</u>ession > Set <u>W</u>orking Directory. Once you are in the correct location, you can run all of the tests in the directory with one command.
+
+```{r, eval = FALSE}
+test_dir(".");
+```
+
+Recall that in the [test-temp_conversion.R](https://github.com/StirlingCodingClub/code_testing/blob/master/test-temp_conversion.R) file, there were five total tests in three `test_that` functions. The first four tests within the first two functions should pass, but the last test "Fahrenheit to Celsius wrong" was deliberately set to fail. Here is what the output of `test_dir` looks like.
+
+<center><br>
+![](images/test_output.png)
+</center><br>
+
+As expected, the first four tests passed, while the last test failed. The failed test is tallied in the Results, and an explanation of the fail is flagged between two horizontal rules. 
 
 <a name="whatelse">Additional resources</a>
 ================================================================================
