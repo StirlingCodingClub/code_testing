@@ -253,29 +253,38 @@ $(document).ready(function () {
     return(F_temp);
 }</code></pre>
 <p>It might not seem like there is much reason for testing these functions. They are both tiny, really only a single line of code doing the work. The maths can be checked by eye, and the function can likewise be checked easily by running a known temperature through each function and looking at the output (which you would naturally do after first writing the functions to double-check that they work). Nevertheless, if these functions were embedded within a much larger R script with other functions to process a large data set and run one or more analyses, an automated test to ensure that each is working as intended is probably worth writing. A test could of course check to make sure that the converted value returned is correct for some arbitrary temperature input, but you also might want to make sure that the output is being returned in a particular format; e.g., as a numeric – or specifically as a value of type ‘double’ rather than an integer. For more complex functions, you might want to ensure that the <em>dimensions</em> of the output are correct (e.g., a matrix with a specific number of rows and columns, or a list with 3 elements of different types).</p>
-<p>We then can write functions to be used with the testthat R package to test each of these. The below tests the <code>F_to_C</code> function.</p>
-<pre class="r"><code>test_that(&quot;Fahrenheit to Celsius&quot;, {
+<p><strong>The test_that function</strong></p>
+<p>We can use the <code>test_that</code> function of the <a href="https://github.com/r-lib/testthat">testthat package</a> to write sime simple tests for the <code>F_to_C</code> and <code>C_to_F</code> functions written above. The <code>test_that</code> function follows a simple structure with two arguments: <code>desc</code> provides a description (in quotes) of whatever is being tested, and <code>code</code> provides whatever code (within curly brackets) to test.</p>
+<p>Within the bracketed code to be tested, one or more <code>expect_that</code> functions are run; each call to <code>expect_that</code> is an independent test. The <code>expect_that</code> function takes two arguments: <code>object</code> is the object that is being examined by the function and <code>condition</code> is the condition that the object is meant to satisfy.</p>
+<p>Below is a test of the <code>F_to_C</code> function. Note the description in quotes and the bracketed code. Within the test, the <code>F_to_C</code> function is run for the temperature of 50 degrees Fahrenheit and stored as <code>temp_C</code>. Since we know that the correct conversion from 50 degrees Fahrenheit to Celsius is 10, we can run an <code>expect_that</code> to check that <code>temp_C</code> equals 10.</p>
+<pre class="r"><code>test_that(desc = &quot;Fahrenheit to Celsius&quot;, code = {
   
-  temp_C &lt;- F_to_C(50);
-  
-  # Test that the result is numeric
-  expect_that( is.numeric(temp_C), equals(TRUE) );
+  temp_C &lt;- F_to_C(50); # Runs the function
   
   # Test that the result is the correct value
-  expect_that( temp_C, equals(10) );
+  expect_that( object = temp_C, condition = equals(10) );
+  
+  # Test that the result is numeric
+  expect_that( object = is.numeric(temp_C), condition = equals(TRUE) );
 })</code></pre>
-<p>The below tests the <code>C_to_F</code> function.</p>
-<pre class="r"><code>test_that(&quot;Celsius to Fahrenheit&quot;, {
+<p>We can do the same below to test the the <code>C_to_F</code> function in the opposite direction. We now that 10 degrees Celsius is equal to 50 degrees Fahrenheit, so we can set the test accordingly.</p>
+<pre class="r"><code>test_that(desc = &quot;Celsius to Fahrenheit&quot;, code = {
   
   temp_F &lt;- C_to_F(10);
   
-  # Test that the result is numeric
-  expect_that( is.numeric(temp_F), equals(TRUE) );
-  
   # Test that the result is the correct value
-  expect_that( temp_F, equals(50) );
+  expect_that( object = temp_F, condition = equals(50) );
+  
+  # Test that the result is numeric
+  expect_that( object = is.numeric(temp_F), condition = equals(TRUE) );
 })</code></pre>
-<p>How to use this is fairly straightforward.</p>
+<p>Setting up the tests above was the boring part. The fun part is running them all at once. You could also run them one by one, but this is not nearly as satisfying. If you were run the above tests for <code>F_to_C</code> or <code>C_to_F</code> in the R console, nothing would print off on your screen; this means that the test is passed. The test will only print something off if it fails, such as with the test below, which deliberately tests the incorrect conversion of Fahrenheit to Celsius.</p>
+<pre class="r"><code>test_that(desc = &quot;Fahrenheit to Celsius wrong&quot;, code = {
+  temp_F &lt;- F_to_C(50);
+  expect_that( object = temp_F, condition = equals(2) );
+})</code></pre>
+<p>To run a full list of tests and return a report, we need to save the above tests in an R script.</p>
+<p><strong>An R script for running testthat functions</strong></p>
 </div>
 <div id="additional-resources" class="section level1">
 <h1><a name="whatelse">Additional resources</a></h1>

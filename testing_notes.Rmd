@@ -86,38 +86,55 @@ C_to_F <- function(C_temp){
 
 It might not seem like there is much reason for testing these functions. They are both tiny, really only a single line of code doing the work. The maths can be checked by eye, and the function can likewise be checked easily by running a known temperature through each function and looking at the output (which you would naturally do after first writing the functions to double-check that they work). Nevertheless, if these functions were embedded within a much larger R script with other functions to process a large data set and run one or more analyses, an automated test to ensure that each is working as intended is probably worth writing. A test could of course check to make sure that the converted value returned is correct for some arbitrary temperature input, but you also might want to make sure that the output is being returned in a particular format; e.g., as a numeric -- or specifically as a value of type 'double' rather than an integer. For more complex functions, you might want to ensure that the *dimensions* of the output are correct (e.g., a matrix with a specific number of rows and columns, or a list with 3 elements of different types).
 
+**The test_that function**
 
-We then can write functions to be used with the testthat R package to test each of these. The below tests the `F_to_C` function.
+We can use the `test_that` function of the [testthat package](https://github.com/r-lib/testthat) to write sime simple tests for the `F_to_C` and `C_to_F` functions written above. The `test_that` function follows a simple structure with two arguments: `desc` provides a description (in quotes) of whatever is being tested, and `code` provides whatever code (within curly brackets) to test. 
+
+Within the bracketed code to be tested, one or more `expect_that` functions are run; each call to `expect_that` is an independent test. The `expect_that` function takes two arguments: `object` is the object that is being examined by the function and `condition` is the condition that the object is meant to satisfy. 
+
+Below is a test of the `F_to_C` function. Note the description in quotes and the bracketed code. Within the test, the `F_to_C` function is run for the temperature of 50 degrees Fahrenheit and stored as `temp_C`. Since we know that the correct conversion from 50 degrees Fahrenheit to Celsius is `r F_to_C(50)`, we can run an `expect_that` to check that `temp_C` equals `r F_to_C(50)`.
 
 ```{r, eval = FALSE}
-test_that("Fahrenheit to Celsius", {
+test_that(desc = "Fahrenheit to Celsius", code = {
   
-  temp_C <- F_to_C(50);
-  
-  # Test that the result is numeric
-  expect_that( is.numeric(temp_C), equals(TRUE) );
+  temp_C <- F_to_C(50); # Runs the function
   
   # Test that the result is the correct value
-  expect_that( temp_C, equals(10) );
+  expect_that( object = temp_C, condition = equals(10) );
+  
+  # Test that the result is numeric
+  expect_that( object = is.numeric(temp_C), condition = equals(TRUE) );
 })
 ```
 
-The below tests the `C_to_F` function.
+We can do the same below to test the the `C_to_F` function in the opposite direction. We now that 10 degrees Celsius is equal to `r C_to_F(10)` degrees Fahrenheit, so we can set the test accordingly.
 
 ```{r, eval = FALSE}
-test_that("Celsius to Fahrenheit", {
+test_that(desc = "Celsius to Fahrenheit", code = {
   
   temp_F <- C_to_F(10);
   
-  # Test that the result is numeric
-  expect_that( is.numeric(temp_F), equals(TRUE) );
-  
   # Test that the result is the correct value
-  expect_that( temp_F, equals(50) );
+  expect_that( object = temp_F, condition = equals(50) );
+  
+  # Test that the result is numeric
+  expect_that( object = is.numeric(temp_F), condition = equals(TRUE) );
 })
 ```
 
-How to use this is fairly straightforward.
+Setting up the tests above was the boring part. The fun part is running them all at once. You could also run them one by one, but this is not nearly as satisfying. If you were run the above tests for `F_to_C` or `C_to_F` in the R console, nothing would print off on your screen; this means that the test is passed. The test will only print something off if it fails, such as with the test below, which deliberately tests the incorrect conversion of Fahrenheit to Celsius.
+
+```{r, eval = FALSE}
+test_that(desc = "Fahrenheit to Celsius wrong", code = {
+  temp_F <- F_to_C(50);
+  expect_that( object = temp_F, condition = equals(2) );
+})
+```
+
+To run a full list of tests and return a report, we need to save the above tests in an R script. 
+
+**An R script for running testthat functions**
+
 
 
 
