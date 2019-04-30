@@ -127,5 +127,35 @@ test_that("Fahrenheit to Celsius", {
 })
 ```
 
+## How to run many tests quickly
+
+**Check Rstudio is set to the same directory as the test R script(s)**
+
+```{r, eval = FALSE, echo = TRUE}
+test_dir("."); # Runs all of your tests
+```
+
+The above will run all files with the prefix `test-` and extension `.R`. 
+
+\vspace{8 mm} \hrule \vspace{3 mm} \pause
+
+**Test output looks like this:**
+
+<center><br>
+![](images/test_output.png)
+</center><br>
+
+## Testing as part of your coding work flow
+
+**Hadley Wickham also [makes several key points](http://r-pkgs.had.co.nz/tests.html) about testing**
+
+- Helps spot bugs in the code earlier and see what needs fixing
+- Multiple unit tests encourages smaller, manageable functions
+- Writing failing tests can be useful when fixing bugs \pause
+
+**Additional resources**
+
+- [Example of unit testing R code with testthat](https://www.johndcook.com/blog/2013/06/12/example-of-unit-testing-r-code-with-testthat/) (John D. Cook)
+- [Testing R packages](http://r-pkgs.had.co.nz/tests.html) (Hadley Wickam)
 
 
