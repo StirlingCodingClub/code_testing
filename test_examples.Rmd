@@ -1,0 +1,123 @@
+---
+title: "Testing things that aren't functions"
+output:
+  html_document:
+    toc: TRUE
+    df_print: kable
+    code_folding: show
+---
+
+```{r include=FALSE}
+
+library(testthat)
+library(NPTourism)
+
+source('tests_jw.R')
+source('test_data.R')
+
+```
+
+My use of testing, so far, has not been for functions.
+I had some awkward, convoluted data fiddling to do. Each time I wanted to change something, I had to check that the change was correct, which I did by eyeballing the data.
+If I wrote a function, it might behave inconsistantly on some of the data sets.  
+Writing tests made it easier to ensure the final products matched what I needed because I could make sure that every change I made worked on all datasets, and if it didn't the tests highlighted exactly where the problems were.
+I have no idea whether this would be considered good practice, I only that it made my life easier at the time.
+
+__Note:__ All test used in this script are included in the file sourced in the setup chunk called `tests_jw.R`.
+
+# Data, with problems
+
+## Aim
+
+Three datasets that have to be combined into a single dataset.  
+Easy way would be to just use rbind to make single dataframe then fix each variable separately.  
+But what if you can't do that?
+
+Some data with deliberately confusing issues to test.
+
+```{r echo=FALSE}
+
+df1_orig; df2_orig; df3_orig
+
+```
+
+# Issues
+
++ `id`
+  + character in `df1`
+  + numeric in `df2` & `df3`
+
++ `sex`
+  + factor `df1` where level 1 = 'F' and level 2 = 'M'
+  + 0 / 1 in `df2` where 0 = M and 1 = F
+  + 0 / 1 in `df3` where 0 = F and 1 = M
+  
++ `age` & `sex`
+  + `df3` has two `age` and `sex` columns
+
++ `group.size`
+  + records with > 1 response have to be duplicated
+  + include age and sex for each duplicate where known
+
+```{r}
+
+df1_orig$sex
+as.numeric(df1_orig$sex)
+df2_orig$sex
+
+```
+
+# Data, without problems (almost)
+
+What the final data should look like (without any further explanation)
+
+```{r echo=FALSE}
+
+df1_new; df2_new; df3_new
+
+```
+
+If I processed the data separately, I was never able to make everything fit together properly.  
+So I wanted to process the data using functions that could be applied to every dataset and produce resulta that were uniform across all datasets.  
+Everytime I wrote a function, I had to test that it worked on each dataset.  
+If it didn't, I would modify the function, then find it broke on a different dataset.  
+
+So, __tests__
+
+# Tests
+
+## Test ID values
+
+```{r error=TRUE}
+
+TestIdResp(df1_orig)  # 2_A, 2_B
+TestIdResp(df1_new)
+
+```
+
+## Test sex
+
+Should be character instead of factor.  
+Only 'M' or 'F' are valid
+
+```{r error=TRUE}
+
+TestSex(df1_orig)
+TestSex(df1_new)
+
+TestSex(df2_orig)
+TestSex(df2_new)
+
+```
+
+## Check group duplication
+
+Check `max(id.dup) == 2`
+
+```{r error=TRUE}
+
+TestDups(df1_new)  # Max is 2
+TestDups(df3_new)  # Max is 4
+
+```
+
