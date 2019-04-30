@@ -18,6 +18,13 @@ Contents
 
 - [Introduction: Why code testing?](#intro)
 - [The testthat R package](#testthat) 
+    - [What is the testthat package?](#whatis)
+    - [How do I get started with testthat?](#howstart)
+    - [Two simple functions that will be tested](#twosimp)
+    - [The test_that function](#test_that)
+    - [An R script for running testthat functions](#Rscript)
+    - [Running all of the tests](#running)
+    - [Putting it all together](#alltogether)
 - [Additional resources](#whatelse)
 
 ********************************************************************************
@@ -30,7 +37,7 @@ Contents
 <a name="testthat">The testthat R package</a>
 ================================================================================
 
-**What is the testthat package?**
+<a name="whatis">**What is the testthat package?**</a>
 
 The [testthat R package](https://github.com/r-lib/testthat) is a helpful way to get started writing tests for the code that you write. Testing code is often boring and tedious, and it is usually very tempting to bypass this stage of the coding process entirely. Once you have code that works (often obtained only after a lot of hard work), you want to use it, not think about all of the ways that it could eventually fail. The [testthat R package](https://github.com/r-lib/testthat) tries to make testing as easy and interesting as possible, so that you will actually want to do it after you have finished coding something. It does this by minimising the amount of effort that goes into writing code tests and maximising how cool it is to watch all of your tests being passed. For example, here is what testing looks like for a reasonably sized [R package](https://confoobio.github.io/gmse/).
 
@@ -40,7 +47,7 @@ The [testthat R package](https://github.com/r-lib/testthat) is a helpful way to 
 
 All of the 143 tests click through one by one to make sure that all of the functions in the package are working as intended. How does testthat determine that the functions are working as intended? Each individual test runs a function with a known input and output. The input is read into the argument's functions, and the output is examined by the test against some criteria, which could be some particular value, object type, or object size. Seeing this in practice below will make it clearer, but the general idea is that after writing the code, you know what the output *should* be for a particular input. As you continue to code more and regularly test, if that output changes or returns an error, then the automated process of testing with testthat will catch the problem and tell you what needs to be fixed.
 
-**How do I get started with testthat?**
+<a name="howstart">**How do I get started with testthat?**</a>
 
 The first thing that you need to do is install the [testthat R package](https://github.com/r-lib/testthat). This can be done from CRAN using the code below.
 
@@ -62,7 +69,7 @@ library(testthat);
 
 You are now ready to start writing R scripts to test the functions that you have written. First, however, we need to add some functions. I will use two simple temperature conversion functions written in a previous coding club session on [writing R packages](https://stirlingcodingclub.github.io/SCC_R_package/notebook/Rpackage_notes.html).
 
-**Two simple functions that will be tested**
+<a name="twosimp">**Two simple functions that will be tested**</a>
 
 When you code, it is often a good idea to try to write short functions. There is no hard rule for determining when a function is too long, but whenever possible, it is usually best to avoid writing functions with too many lines to view all at once on your monitor. Small functions that do one job, which can be called by *other* functions as necessary, make coding easier later on because this allows you to compartmentalise specific tasks and better see how everything fits together at once ([here is](https://github.com/bradduthie/RandomMatrixStability/blob/master/R/ga.R) a good example of this in R code; [here is](https://github.com/bradduthie/EcoEdu/blob/master/R/sim_pop_gen.R) a bad example; and [here is](https://github.com/bradduthie/pre_post_cop/blob/master/code/Inbreed.c#L33) a *very* bad example; all of these work, but the first is much nicer to read and test). Small functions are also easier to test because it is clearer what output you are expecting for a particular function input. Many small functions (rather than a few large ones) also allow you to run more tests and better pinpoint the problem when something goes wrong.
 
@@ -86,7 +93,7 @@ C_to_F <- function(C_temp){
 
 It might not seem like there is much reason for testing these functions. They are both tiny, really only a single line of code doing the work. The maths can be checked by eye, and the function can likewise be checked easily by running a known temperature through each function and looking at the output (which you would naturally do after first writing the functions to double-check that they work). Nevertheless, if these functions were embedded within a much larger R script with other functions to process a large data set and run one or more analyses, an automated test to ensure that each is working as intended is probably worth writing. A test could of course check to make sure that the converted value returned is correct for some arbitrary temperature input, but you also might want to make sure that the output is being returned in a particular format; e.g., as a numeric -- or specifically as a value of type 'double' rather than an integer. For more complex functions, you might want to ensure that the *dimensions* of the output are correct (e.g., a matrix with a specific number of rows and columns, or a list with 3 elements of different types).
 
-**The test_that function**
+<a name="test_that">**The test_that function**</a>
 
 We can use the `test_that` function of the [testthat package](https://github.com/r-lib/testthat) to write sime simple tests for the `F_to_C` and `C_to_F` functions written above. The `test_that` function follows a simple structure with two arguments: `desc` provides a description (in quotes) of whatever is being tested, and `code` provides whatever code (within curly brackets) to test. 
 
@@ -133,7 +140,7 @@ test_that(desc = "Fahrenheit to Celsius wrong", code = {
 
 To run a full list of tests and return a report, we need to save the above tests in an R script. 
 
-**An R script for running testthat functions**
+<a name="Rscript">**An R script for running testthat functions**</a>
 
 Test functions can be saved like any other R script file (with a .R extension), but with one caveat. A test R script should start with the prefix 'test-'. A good way of doing this is to add the prefix to the name of file that stores the functions to be tested. In other words, if you are testing the functions in the file [temp_conversion.R](https://github.com/StirlingCodingClub/code_testing/blob/master/temp_conversion.R), then you can save the tests in the file [test-temp_conversion.R](https://github.com/StirlingCodingClub/code_testing/blob/master/test-temp_conversion.R). Here is what the [test-temp_conversion.R](https://github.com/StirlingCodingClub/code_testing/blob/master/test-temp_conversion.R) file looks like.
 
@@ -175,7 +182,7 @@ Note the first few lines of the file. The first line reads in the testthat R pac
 
 After the testthat library is read in, the context established, and the functions to be tested sourced from the correct file, the tests themselves are added to the script. Any number of tests is permitted in a test script, and any number of scripts can be saved to the same directory. The automated test procedure will simply look for anything with the prefix 'test-' and extension '.R' in a directory and run all of the tests.
 
-**Running all of the tests**
+<a name="running">**Running all of the tests**</a>
 
 To run all of the tests, first make sure that R is in the correct directory (i.e., the same folder location as the test scripts). You can always check the working directory with the command below.
 
@@ -196,6 +203,10 @@ Recall that in the [test-temp_conversion.R](https://github.com/StirlingCodingClu
 </center><br>
 
 As expected, the first four tests passed, while the last test failed. The failed test is tallied in the Results, and an explanation of the fail is flagged between two horizontal rules. 
+
+<a name="alltogether">**Putting it all together**</a>
+
+With tests in place, the `test_dir` function can be run at any time during the coding process. As you continue to write new R scripts and use and re-use R functions, testing frequently is an excellent way to spot bugs early and pinpoint what needs to be fixed. Doing this will make it much less likely that changing your code will unintentionally cause an error, forcing you to backtrack to figure out what went wrong. Hadley Wickham also [points out that](http://r-pkgs.had.co.nz/tests.html) having multiple unit tests will also improve your coding by forcing you to write smaller, more manageable functions. He also suggests, as a strategy, starting to code by writing tests that you know will fail, and working until they pass. For example, when you find a bug with your code, write a test that you know will fail until the bug is fixed. For more information, see Hadley Wickham's [chapter on testing](http://r-pkgs.had.co.nz/tests.html).
 
 <a name="whatelse">Additional resources</a>
 ================================================================================
