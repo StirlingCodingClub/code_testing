@@ -1,6 +1,6 @@
 ---
 title: "Introduction to testing R code"
-author: "John Wilson, Brad Duthie"
+author: "Brad Duthie"
 date: "1 May 2019"
 output: 
     html_document:
@@ -31,6 +31,10 @@ Contents
 
 <a name="intro">Introduction: Why code testing?</a>
 ================================================================================
+
+Testing is an important part of the coding process. If you have ever written a function in R, then you already have some experience in testing code; checking to see whether or not the function 'works' is a type of informal test and part of the normal process of coding. But just because a function worked initially, does not necessarily mean that it will continue to work when something changes. An error might arise if you try (perhaps unknowingly) to use your function in a different way than originally intended (e.g., with a slightly different input type). And if you have written a lot of code for your model or data analysis, you will likely have several functions working together, making it difficult to pinpoint the cause of the error. By writing [unit tests](https://www.toptal.com/qa/how-to-write-testable-code-and-why-it-matters) -- which independently check small parts of your code to see that they work as intended -- you can often quickly identify (or rule out) where the problem lies. 
+
+Writing tests as you code can also make coding more efficient and more fun. They encourage you code in manageable chunks and verify that each function you write is working as intended. This helps both with the planning and organisation of large data analyses and modelling projects. In R, it is also very satisfying and reassuring watching the code that you have written pass a long list of well-constructed unit tests. Here we will demonstrate how to use the [testthat R package](https://github.com/r-lib/testthat) in R, which is an easy way to get started with code testing. After reading through these notes, you should be able to write unit tests for your own code.
 
 
 

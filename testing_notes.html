@@ -231,6 +231,8 @@ $(document).ready(function () {
 </div>
 <div id="introduction-why-code-testing" class="section level1">
 <h1><a name="intro">Introduction: Why code testing?</a></h1>
+<p>Testing is an important part of the coding process. If you have ever written a function in R, then you already have some experience in testing code; checking to see whether or not the function ‘works’ is a type of informal test and part of the normal process of coding. But just because a function worked initially, does not necessarily mean that it will continue to work when something changes. An error might arise if you try (perhaps unknowingly) to use your function in a different way than originally intended (e.g., with a slightly different input type). And if you have written a lot of code for your model or data analysis, you will likely have several functions working together, making it difficult to pinpoint the cause of the error. By writing <a href="https://www.toptal.com/qa/how-to-write-testable-code-and-why-it-matters">unit tests</a> – which independently check small parts of your code to see that they work as intended – you can often quickly identify (or rule out) where the problem lies.</p>
+<p>Writing tests as you code can also make coding more efficient and more fun. They encourage you code in manageable chunks and verify that each function you write is working as intended. This helps both with the planning and organisation of large data analyses and modelling projects. In R, it is also very satisfying and reassuring watching the code that you have written pass a long list of well-constructed unit tests. Here we will demonstrate how to use the <a href="https://github.com/r-lib/testthat">testthat R package</a> in R, which is an easy way to get started with code testing. After reading through these notes, you should be able to write unit tests for your own code.</p>
 </div>
 <div id="the-testthat-r-package" class="section level1">
 <h1><a name="testthat">The testthat R package</a></h1>
@@ -244,7 +246,7 @@ $(document).ready(function () {
 <p><a name="howstart"><strong>How do I get started with testthat?</strong></a></p>
 <p>The first thing that you need to do is install the <a href="https://github.com/r-lib/testthat">testthat R package</a>. This can be done from CRAN using the code below.</p>
 <pre class="r"><code>install.packages(&quot;testthat&quot;)</code></pre>
-<p>Alternatively, you can donwload <a href="https://github.com/r-lib/testthat">testthat</a> from GitHub if you have the <a href="https://github.com/r-lib/devtools">devtools</a> R package installed.</p>
+<p>Alternatively, you can download <a href="https://github.com/r-lib/testthat">testthat</a> from GitHub if you have the <a href="https://github.com/r-lib/devtools">devtools</a> R package installed.</p>
 <pre class="r"><code>devtools::install_github(&quot;r-lib/testthat&quot;);</code></pre>
 <p>Once <a href="https://github.com/r-lib/testthat">testthat</a> is installed, you can load it into Rstudio just like any other R package.</p>
 <pre class="r"><code>library(testthat);</code></pre>
