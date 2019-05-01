@@ -28,8 +28,13 @@ opts_chunk$set(echo = FALSE);
 
 ## Introduction: Why bother testing your code?
 
-Good question. I need to flesh this out a bit.
+\pause
 
+- You already do this informally (checking if a function works) \pause \newline
+- Code that initially works might not later under different conditions \pause \newline
+- Encourages better coding (writing shorter, more manageable functions) \pause \newline
+- Reassuring to double-check that *everything* works after changing something \pause \newline
+- Gratifying to watch code pass multiple automated tests (it looks cool).
 
 
 ## Testing all of your code at once is satisfying

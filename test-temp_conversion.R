@@ -7,10 +7,10 @@ test_that("Fahrenheit to Celsius", {
   temp_C <- F_to_C(50);
   
   # Test that the result is numeric
-  expect_that( is.numeric(temp_C), equals(TRUE) );
+  expect_that( object = is.numeric(temp_C), condition = equals(TRUE) );
   
   # Test that the result is the correct value
-  expect_that( temp_C, equals(10) );
+  expect_that( object = temp_C, condition = equals(10) );
 })
 
 test_that("Celsius to Fahrenheit", {
@@ -18,10 +18,10 @@ test_that("Celsius to Fahrenheit", {
   temp_F <- C_to_F(10);
   
   # Test that the result is numeric
-  expect_that( is.numeric(temp_F), equals(TRUE) );
+  expect_that( object = is.numeric(temp_F), condition = equals(TRUE) );
   
   # Test that the result is the correct value
-  expect_that( temp_F, equals(50) );
+  expect_that( object = temp_F, condition = equals(50) );
 })
 
 # This test will fail
