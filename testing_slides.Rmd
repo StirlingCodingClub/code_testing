@@ -1,8 +1,8 @@
 ---
 title: "Introduction to testing R code"
-subtitle: https://stirlingcodingclub.github.io/code_testing/testing_notes.html
+subtitle: "https://stirlingcodingclub.github.io/code_testing"
 author: "Brad Duthie"
-date: "1 May 2019"
+date: "6 April 2022"
 output:
   beamer_presentation:
     theme: "default"
@@ -40,7 +40,7 @@ opts_chunk$set(echo = FALSE);
 ## Testing all of your code at once is satisfying
 
 <center><br>
-![](images/gmse_test.png)
+![](images/gmse_test.png){width=70%}
 </center><br>
 
 ## Getting started: install the testthat package
