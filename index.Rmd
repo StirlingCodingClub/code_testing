@@ -2,9 +2,10 @@
 title: "Introduction to testing R code"
 author: "Brad Duthie"
 date: "22 MAR 2023"
-output: 
-    html_document:
-        code_folding: show
+output:
+  pdf_document: default
+  html_document:
+    code_folding: show
 ---
 
 Contents
