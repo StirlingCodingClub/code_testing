@@ -2,7 +2,7 @@
 title: "Introduction to testing R code"
 subtitle: "https://stirlingcodingclub.github.io/code_testing"
 author: "Brad Duthie"
-date: "22 March 2023"
+date: "24 April 2024"
 output:
   beamer_presentation:
     theme: "default"

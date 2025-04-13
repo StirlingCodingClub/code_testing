@@ -1,11 +1,11 @@
 ---
 title: "Introduction to testing R code"
 author: "Brad Duthie"
-date: "23 APR 2024"
+date: "15 APR 2025"
 output:
-  pdf_document: default
   html_document:
     code_folding: show
+  pdf_document: default
 ---
 
 Contents
